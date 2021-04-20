@@ -1,0 +1,18 @@
+@mixin clamp($num_of_row) {
+    @if $num_of_row == 0 {
+      overflow: unset;
+      white-space: unset;
+      text-overflow: unset;
+      -webkit-box-orient: unset;
+      -webkit-line-clamp: unset;
+    } @else if $num_of_row == 1 {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    } @else {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: $num_of_row;
+    }
+}

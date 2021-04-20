@@ -1,0 +1,285 @@
+//========================
+//  reset
+//========================
+.v-application ul,
+.v-application ol {
+  padding-left: 0;
+}
+.v-application p {
+  margin-bottom: 0;
+}
+
+.v-application .row {
+  margin: 0 !important;
+}
+
+.v-application code {
+  background-color: initial !important;
+}
+
+// =========================
+// wrapper
+// =========================
+.v-main {
+  background-color: color("smoke1");
+}
+
+.v-main > .v-main__wrap > .container {
+  background-color: color("white1");
+  max-width: 100% !important;
+}
+
+// =========================
+// header
+// =========================
+.v-app-bar {
+  background-color: color("white1") !important;
+  box-shadow: 0 0 3px #eee !important;
+}
+.v-app-bar svg > path {
+  fill: color("black3");
+}
+.v-app-bar .v-toolbar__title {
+  cursor: pointer;
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-weight: 400;
+  color: color("black2");
+  transition: 0.3s;
+  &:hover {
+    color: color();
+  }
+}
+
+// =========================
+// footer
+// =========================
+.v-footer {
+  padding: 0 !important;
+  height: auto !important;
+}
+
+.v-bottom-navigation {
+  height: 70px !important;
+  box-shadow: 0 0 3px #eee !important;
+  background-color: color("black1") !important;
+  p {
+    color: color("white1");
+  }
+  svg {
+    height: 30px;
+  }
+  svg > path {
+    fill: color("white1");
+  }
+
+  @include pc() {
+    display: none !important;
+  }
+}
+
+// =========================
+// list
+// =========================
+.v-list-item__title {
+  padding: 5px 0;
+}
+
+// =========================
+// drawer
+// =========================
+.v-navigation-drawer {
+  background: color("black1") !important;
+
+  .v-list-item__title,
+  .v-list-item__content {
+    color: color("white1") !important;
+  }
+
+  .v-list-item__action svg > path {
+    fill: color("white1");
+  }
+}
+
+.v-navigation-drawer--right {
+  background: color("white1") !important;
+
+  .v-list-item__title,
+  .v-list-item__content {
+    color: color("black1") !important;
+  }
+
+  .v-list-item__action svg > path {
+    fill: color("black1");
+  }
+}
+
+.v-navigation-drawer__border {
+  display: none;
+}
+
+
+// =========================
+// card
+// =========================
+.v-card {
+  border-radius: 5px !important;
+  box-shadow: none !important;
+}
+
+.v-card__title {
+  display: flex;
+  padding: 12px 20px 12px 20px !important;
+  font-size: 18px !important;
+  font-weight: bold;
+  text-align: left;
+  letter-spacing: 2px;
+  color: white;
+  background: color("black2");
+}
+
+.v-card__title::before {
+  content: "";
+  display: none;
+}
+
+.v-card__subtitle {
+  background-color: color("smoke1");
+  color: color("black2");
+  margin: 0 !important;
+  font-size: 15px !important;
+  text-align: left;
+  box-shadow: 0 0 5px #eee inset;
+  padding: 10px 20px 10px 20px !important;
+}
+.v-card__text {
+  padding: 10px 20px 10px 20px !important;
+  color: color("black1");
+}
+
+// =========================
+// stepper
+// =========================
+.v-stepper {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.v-stepper__content {
+  padding: 0 !important;
+}
+
+// =========================
+// inputs
+// =========================
+.v-text-field--enclosed.v-text-field--outlined textarea,
+.v-text-field--enclosed.v-text-field--outlined input {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}
+
+.v-input__control > .v-input__slot {
+  margin-bottom: 2px !important;
+  min-height: 0 !important;
+}
+
+.v-input__control > .v-text-field__details {
+  margin: 0 !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+}
+
+.v-input__slot > fieldset {
+  border: 1px solid #888;
+  .v-input--is-focused & {
+    border: 2px solid teal !important;
+  }
+
+  .error--text & {
+    border: 2px solid maroon !important;
+  }
+
+  .static & {
+    border: none !important;
+  }
+
+  .v-input:hover & {
+    border: 1px solid #aaa;
+  }
+}
+
+.static {
+  .v-input__slot {
+    pointer-events: none;
+  }
+
+  .v-text-field__details {
+    display: none;
+  }
+
+  .v-select__slot .v-input__append-inner {
+    display: none;
+  }
+
+  .v-select__selections {
+    padding: 0 !important;
+  }
+}
+
+// =========================
+// validation errors
+// =========================
+.v-text-field__details .error--text {
+  position: absolute;
+  top: -25px;
+  right: 10px;
+  background-color: maroon;
+  border-radius: 5px;
+  padding: 0 20px;
+  box-shadow: 2px 2px 3px #ccc;
+  display: flex;
+  align-items: center;
+
+  &::before {
+    content: "!";
+    text-align: center;
+    background: white;
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    font-size: 10px;
+    color: maroon;
+  }
+  &::after {
+    content: "▼";
+    display: block;
+    position: absolute;
+    bottom: -10px;
+    left: 10px;
+    color: maroon;
+    transform: skewX(-20deg);
+  }
+  & .v-messages__message {
+    padding: 5px !important;
+    color: white;
+    transition: 0s !important;
+  }
+}
+
+// =============================
+// validation error positioning
+// ==============================
+.v-input {
+  position: relative;
+}
+
+.input-col2,
+.input-col3 {
+  position: relative;
+}
+
+.input-col2 .v-input,
+.input-col3 .v-input {
+  position: static;
+}

@@ -1,0 +1,19 @@
+//Noto Sans CJK JP
+@font-face {
+  font-family: "Noto Sans CJK JP";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/font/NotoSansCJKjp-Bold.min.woff2") format("woff2"),
+       url("/font/NotoSansCJKjp-Bold.min.woff") format("woff"),
+       url("/font/NotoSansCJKjp-Bold.min.otf") format("opentype");
+}
+@font-face {
+  font-family: "Noto Sans CJK JP";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/font/NotoSansCJKjp-Regular.min.woff2") format("woff2"),
+       url("/font/NotoSansCJKjp-Regular.min.woff") format("woff"),
+       url("/font/NotoSansCJKjp-Regular.min.otf") format("opentype");
+}

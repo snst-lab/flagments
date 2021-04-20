@@ -1,0 +1,14 @@
+// Ref: https://github.com/nuxt-community/vuetify-module#customvariables
+//
+// The variables you want to modify
+// $font-size-root: 20px;
+// @import '~vuetify/src/styles/styles.sass';
+@import '../resource/font.scss';
+
+//========================
+//  font
+//========================
+$body-font-family: font("jp"), 'Hiragino Kaku Gothic ProN',
+'ヒラギノ角ゴ ProN W3', 'ヒラギノ角ゴシック', 'Hiragino Sans', 'メイリオ',
+meiryo, 'ＭＳ ゴシック', sans-serif;
+

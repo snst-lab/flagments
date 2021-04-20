@@ -1,0 +1,8 @@
+$font-list: (
+  jp: "Noto Sans CJK JP",
+  en: "Roboto",
+);
+
+@function font($arg: "jp") {
+  @return map-get($font-list, $arg);
+}

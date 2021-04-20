@@ -1,0 +1,44 @@
+@import "../vuetify/breakpoints.scss";
+
+@mixin xs {
+  @media screen and (min-width: map-get($grid-breakpoints, "xs")) and (max-width: map-get($grid-breakpoints, "sm") - 1px) {
+    @content;
+  }
+}
+
+@mixin sm {
+  @media screen and (min-width: map-get($grid-breakpoints, "sm")) and (max-width: map-get($grid-breakpoints, "md") - 1px) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media screen and (min-width: map-get($grid-breakpoints, "md")) and (max-width: map-get($grid-breakpoints, "lg") - 1px) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media screen and (min-width: map-get($grid-breakpoints, "lg")) and (max-width: map-get($grid-breakpoints, "xl") - 1px) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media screen and (min-width: map-get($grid-breakpoints, "xl")) {
+    @content;
+  }
+}
+
+
+@mixin pc{
+  @media screen and (min-width: map-get($grid-breakpoints, "lg")) {
+    @content;
+  }
+}
+
+@mixin sp{
+  @media screen and (max-width: map-get($grid-breakpoints, "lg") - 1px) {
+    @content;
+  }
+}
