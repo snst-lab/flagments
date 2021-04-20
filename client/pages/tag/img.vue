@@ -175,8 +175,8 @@ export default defineComponent({
       },
     ];
 
-    this.$nuxt.$emit("pageTitle", title);
     setTimeout(() => {
+      this.$nuxt.$emit("pageTitle", title);
       this.$nuxt.$emit("breadCrumbs", breadcrumbs);
     }, 100);
 

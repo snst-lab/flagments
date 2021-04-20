@@ -227,6 +227,9 @@
   }
 }
 
+.v-select.v-text-field--outlined:not(.v-text-field--single-line) .v-select__selections {
+  padding: 5px 0 !important;
+}
 // =========================
 // validation errors
 // =========================

@@ -137,8 +137,9 @@ export default defineComponent({
         link: meta.link.index,
       },
     ];
-    this.$nuxt.$emit("pageTitle", title);
+
     setTimeout(() => {
+      this.$nuxt.$emit("pageTitle", title);
       this.$nuxt.$emit("breadCrumbs", breadcrumbs);
     }, 100);
 
