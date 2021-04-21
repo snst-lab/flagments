@@ -1,5 +1,4 @@
 interface Meta {
-  link: Record<string, string>;
   title: Record<string, string>;
   description: Record<string, string>;
   keywords: Record<string, string>;
@@ -8,10 +7,6 @@ interface Meta {
 }
 
 export const meta: Meta = {
-  link: {
-    index: "/",
-    "tag-img": "/tag/img",
-  },
   title: {
     index: "HOME",
     "tag-img": "Image tag generator",

@@ -133,8 +133,8 @@ export default defineComponent({
     const description = meta.description[name];
     const breadcrumbs = [
       {
-        name: meta.title.index,
-        link: meta.link.index,
+        name: meta.title[name],
+        link: route.path,
       },
     ];
 

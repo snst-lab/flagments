@@ -9,7 +9,13 @@ export const mutations = {
     state: NuxtState,
     { key, value, expire }: { key: string; value: any; expire: number }
   ) {
-    state[key] = JSON.stringify(value);
+    switch (typeof value) {
+      case "object":
+        state[key] = JSON.stringify(value);
+        break;
+      default:
+        state[key] = value;
+    }
     if (
       typeof expire === "undefined" ||
       (typeof expire !== "undefined" && expire > 0)
@@ -33,7 +39,7 @@ export const actions = {
    * Only SSR
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async nuxtServerInit({ state, commit, dispatch }: Store<any>) {},
+  nuxtServerInit({ state, commit, dispatch }: Store<any>) {},
 
   /**
    * SSR/SPA/SSG Common
@@ -52,10 +58,13 @@ export const getters = {
     mutations.set(state, { key, value, expire });
   },
   get: (state: NuxtState) => (key: string) => {
-    if (typeof key === "string") {
-      return key in state ? JSON.parse(state[key]) : {};
-    } else {
-      return state;
+    if (typeof key !== "string" || !(key in state)) {
+      return null;
+    }
+    try {
+      return JSON.parse(state[key]);
+    } catch (e) {
+      return String(state[key]);
     }
   },
   exist: (state: NuxtState) => (key: string) => {

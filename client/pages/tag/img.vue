@@ -36,6 +36,16 @@
             ></v-select>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title> Options </v-list-item-title>
+            <v-checkbox
+              v-if="loaded"
+              v-model="options_figure"
+              label="Wrap with <figure> tag"
+            ></v-checkbox>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </div>
@@ -49,6 +59,7 @@ import {
   onBeforeMount,
   onMounted,
   watch,
+  toRef,
   SetupContext,
 } from "@vue/composition-api";
 import { MetaInfo } from "vue-meta";
@@ -79,40 +90,55 @@ export default defineComponent({
       markdown: ref(""),
       tag: ref(""),
       update: ref(true),
-      prefix: ref(""),
-      scale: ref("x1"),
+      prefix: ref(vuex.get("tag-img_prefix") || "/"),
+      scale: ref(vuex.get("tag-img_scale") || "x1"),
       scales: reactive({
         x1: 1,
         x2: 0.5,
       }),
-      data: {
+      options_figure: ref(vuex.get("tag-img_options_figure")),
+      data: vuex.get("tag-img_data") || {
         name: "",
         size: 0,
         type: "",
         base64: "",
       },
       isMobile: vuetify.breakpoint.mdAndDown,
-      scaleChange: () => {},
-      onDrop: (event: DragEvent, data: any) => {
+      onDrop: async (event: any, data: any) => {
         d.data = data;
-        d.drawTag();
+        await d.drawTag();
+        d.save();
       },
-      drawTag: () => {
-        const image = new Image();
-        image.onload = () => {
-          const basename = d.data.name.replace(/\.[^/.]+$/, "");
-          const prefix = /\/$/.test(d.prefix.value)
-            ? d.prefix.value
-            : d.prefix.value + "/";
-          const scale = d.scales[d.scale.value as keyof Scale];
+      drawTag: (): Promise<void> => {
+        return new Promise((resolve, reject) => {
+          const image = new Image();
+          image.onload = () => {
+            const basename = d.data.name.replace(/\.[^/.]+$/, "");
 
-          d.tag.value = `<img src="${prefix}${d.data.name}" width="${~~(
-            image.naturalWidth * scale
-          )}" height="${~~(image.naturalHeight * scale)}" alt="${basename}"/>`;
+            const prefix = /\/$/.test(d.prefix.value)
+              ? d.prefix.value
+              : d.prefix.value + "/";
+            const scale = d.scales[d.scale.value as keyof Scale];
 
-          d.markdown.value = "```html\n" + d.tag.value + "\n```";
-        };
-        image.src = d.data.base64;
+            if (d.options_figure.value) {
+              d.tag.value = `<figure class="img__${basename}">\n  <img src="${prefix}${
+                d.data.name
+              }" width="${~~(image.naturalWidth * scale)}" height="${~~(
+                image.naturalHeight * scale
+              )}" alt="${basename}"/>\n</figure>`;
+            } else {
+              d.tag.value = ` <img class="img__${basename}" src="${prefix}${
+                d.data.name
+              }" width="${~~(image.naturalWidth * scale)}" height="${~~(
+                image.naturalHeight * scale
+              )}" alt="${basename}"/>`;
+            }
+
+            d.markdown.value = "```html\n" + d.tag.value + "\n```";
+            resolve();
+          };
+          image.src = d.data.base64;
+        });
       },
       clipboard: () => {
         if (navigator) {
@@ -122,16 +148,22 @@ export default defineComponent({
           root.$emit("snackbar", "Current browser dose not support clipboard");
         }
       },
+      save: () => {
+        vuex.set("tag-img_prefix", d.prefix.value);
+        vuex.set("tag-img_scale", d.scale.value);
+        vuex.set("tag-img_options_figure", d.options_figure.value);
+        vuex.set("tag-img_data", d.data);
+      },
     };
-
     /**
      * Watchers
      */
     watch(d.markdown, () => {
       d.update.value = !d.update.value;
     });
-    watch([d.prefix, d.scale], () => {
-      d.drawTag();
+    watch([d.prefix, d.scale, d.options_figure], async () => {
+      await d.drawTag();
+      d.save();
     });
     /**
      * Lifecycle Methods
@@ -144,6 +176,7 @@ export default defineComponent({
     });
 
     onMounted(() => {
+      d.drawTag();
       loaded();
     });
 
@@ -154,7 +187,7 @@ export default defineComponent({
       setTimeout(() => {
         d.loaded.value = false;
         $nextTick(() => (d.loaded.value = true));
-      }, 1000);
+      }, 500);
     }
 
     return d;
@@ -167,11 +200,11 @@ export default defineComponent({
     const breadcrumbs = [
       {
         name: meta.title.index,
-        link: meta.link.index,
+        link: "/",
       },
       {
         name: meta.title[name],
-        link: meta.link[name],
+        link: route.path,
       },
     ];
 

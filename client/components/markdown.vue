@@ -34,6 +34,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
+@import "@/assets/css/markdown";
+
 .markdown {
   min-height: 80px;
   width: 100%;

@@ -81,7 +81,13 @@
 // =========================
 // list
 // =========================
-.v-list-item__title {
+.v-list-item .v-list-item__title{
+  font-size:14px;
+}
+.v-list-item > .v-list-item__title {
+  flex:1 1 40%;
+}
+.v-list-item > .v-list-item__content > .v-list-item__title {
   padding: 5px 0;
 }
 
@@ -91,12 +97,12 @@
 .v-navigation-drawer {
   background: color("black1") !important;
 
-  .v-list-item__title,
-  .v-list-item__content {
+  .v-list-item .v-list-item__title,
+  .v-list-item .v-list-item__content {
     color: color("white1") !important;
   }
 
-  .v-list-item__action svg > path {
+  .v-list-item .v-list-item__action svg > path {
     fill: color("white1");
   }
 }
@@ -104,12 +110,14 @@
 .v-navigation-drawer--right {
   background: color("white1") !important;
 
-  .v-list-item__title,
-  .v-list-item__content {
+  .v-list-item .v-list-item__title{
+    color: color("black3") !important;
+  }
+  .v-list-item .v-list-item__content {
     color: color("black1") !important;
   }
 
-  .v-list-item__action svg > path {
+  .v-list-item .v-list-item__action svg > path {
     fill: color("black1");
   }
 }
@@ -172,10 +180,13 @@
 // =========================
 // inputs
 // =========================
-.v-text-field--enclosed.v-text-field--outlined textarea,
-.v-text-field--enclosed.v-text-field--outlined input {
-  margin-top: 5px !important;
-  margin-bottom: 5px !important;
+.v-input .v-input__slot input {
+  max-height:unset;
+}
+.v-text-field--outlined textarea,
+.v-text-field--outlined .v-text-field__slot > input {
+  margin-top: 7px !important;
+  margin-bottom: 7px !important;
 }
 
 .v-input__control > .v-input__slot {
@@ -190,7 +201,7 @@
   padding: 0 !important;
 }
 
-.v-input__slot > fieldset {
+ .v-input__slot > fieldset {
   border: 1px solid #888;
   .v-input--is-focused & {
     border: 2px solid teal !important;
@@ -208,6 +219,7 @@
     border: 1px solid #aaa;
   }
 }
+
 
 .static {
   .v-input__slot {
@@ -227,9 +239,7 @@
   }
 }
 
-.v-select.v-text-field--outlined:not(.v-text-field--single-line) .v-select__selections {
-  padding: 5px 0 !important;
-}
+
 // =========================
 // validation errors
 // =========================

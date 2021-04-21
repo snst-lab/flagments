@@ -65,11 +65,11 @@ export default defineComponent({
     const breadcrumbs = [
       {
         name: meta.title.index,
-        link: meta.link.index,
+        link: "/",
       },
       {
         name: meta.title[name],
-        link: meta.link[name],
+        link: route.path,
       },
     ];
 
