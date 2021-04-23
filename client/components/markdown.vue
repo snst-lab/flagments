@@ -40,6 +40,6 @@ export default defineComponent({
   min-height: 80px;
   width: 100%;
   border-radius: 10px;
-  padding: 1em;
+  padding: 2em 1em;
 }
 </style>

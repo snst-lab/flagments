@@ -47,6 +47,21 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <v-divider />
+      <v-list>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title> Ratio (W/H)</v-list-item-title>
+            <p>{{ ~~(aspectRatio * 100) }} %</p>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title> Ratio (H/W)</v-list-item-title>
+            <p>{{ ~~((1 / aspectRatio) * 100) }} %</p>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
   </div>
 </template>
@@ -59,7 +74,6 @@ import {
   onBeforeMount,
   onMounted,
   watch,
-  toRef,
   SetupContext,
 } from "@vue/composition-api";
 import { MetaInfo } from "vue-meta";
@@ -96,6 +110,7 @@ export default defineComponent({
         x1: 1,
         x2: 0.5,
       }),
+      aspectRatio: ref(1),
       options_figure: ref(vuex.get("tag-img_options_figure")),
       data: vuex.get("tag-img_data") || {
         name: "",
@@ -115,7 +130,7 @@ export default defineComponent({
           image.onload = () => {
             let basename = d.data.name.replace(/\.[^/.]+$/, "");
 
-            if (d.scale === "x2") {
+            if (d.scale.value === "x2") {
               basename = basename.replace(/@2x$/, "");
             }
 
@@ -124,16 +139,21 @@ export default defineComponent({
               : d.prefix.value + "/";
             const scale = d.scales[d.scale.value as keyof Scale];
 
+            const width = image.naturalWidth !== 0 ? image.naturalWidth : 100;
+            const height =
+              image.naturalHeight !== 0 ? image.naturalHeight : 100;
+            d.aspectRatio.value = width / height;
+
             if (d.options_figure.value) {
               d.tag.value = `<figure class="img__${basename}">\n  <img src="${prefix}${
                 d.data.name
-              }" width="${~~(image.naturalWidth * scale)}" height="${~~(
+              }" width="${~~(width * scale)}" height="${~~(
                 image.naturalHeight * scale
               )}" alt="${basename}"/>\n</figure>`;
             } else {
               d.tag.value = ` <img class="img__${basename}" src="${prefix}${
                 d.data.name
-              }" width="${~~(image.naturalWidth * scale)}" height="${~~(
+              }" width="${~~(width * scale)}" height="${~~(
                 image.naturalHeight * scale
               )}" alt="${basename}"/>`;
             }

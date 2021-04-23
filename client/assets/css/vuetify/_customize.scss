@@ -91,6 +91,10 @@
   padding: 5px 0;
 }
 
+.v-list-item > .v-list-item__content > p {
+  text-indent: 1em;
+  padding:5px 0;
+}
 // =========================
 // drawer
 // =========================
@@ -239,6 +243,9 @@
   }
 }
 
+.v-input--selection-controls__input{
+  margin-left: 10px !important;
+}
 
 // =========================
 // validation errors
