@@ -113,7 +113,11 @@ export default defineComponent({
         return new Promise((resolve, reject) => {
           const image = new Image();
           image.onload = () => {
-            const basename = d.data.name.replace(/\.[^/.]+$/, "");
+            let basename = d.data.name.replace(/\.[^/.]+$/, "");
+
+            if (d.scale === "x2") {
+              basename = basename.replace(/@2x$/, "");
+            }
 
             const prefix = /\/$/.test(d.prefix.value)
               ? d.prefix.value
